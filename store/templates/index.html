@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+  {% block content %}
+  {% load cart %}
+  <!-- BODY -->
+
+  <!-- Heading & Quotes -->
+  <div class = "mx-auto">
+
+    <div class = "mx-auto">
+        <h1 class="display-4" style = "text-align: center; margin-top: 90px;"><b> Job opportunities for you </b></h1>
+    </div>
+
+    <p style = "text-align: center; color: darkgray; margin-top: 60px ;font-size: 20px;"> “In the middle of difficulty lies opportunity.” </p>
+    
+  </div>
+
+
+
+  <div class="row">
+
+    <!-- Filters -->
+    <div class = "col">
+  
+      <!-- Skills Filter -->
+  
+      <div class="dropdown m-3 p-3">
+        <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Skills
+        </button>
+        <div class="dropdown-menu mx-auto" aria-labelledby="dropdownMenuButton">
+          {% for skillcat in skillcats %}
+          <a class="dropdown-item" href="/?skillcat={{skillcat.id}}">{{skillcat.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+  
+      <div class="dropdown m-3 p-3">
+        <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Location
+        </button>
+        <div class="dropdown-menu mx-auto" aria-labelledby="dropdownMenuButton">
+          {% for lcat in lcats %}
+          <a class="dropdown-item" href="/?lcat={{lcat.id}}">{{lcat.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+  
+      <div class="dropdown m-3 p-3">
+        <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Industry
+        </button>
+        <div class="dropdown-menu mx-auto" aria-labelledby="dropdownMenuButton">
+          {% for icat in icats %}
+          <a class="dropdown-item" href="/?icat={{icat.id}}">{{icat.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+  
+      <div class="dropdown m-3 p-3">
+        <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Salary
+        </button>
+        <div class="dropdown-menu mx-auto" aria-labelledby="dropdownMenuButton">
+          {% for scat in scats %}
+          <a class="dropdown-item" href="/?scat={{scat.id}}">{{scat.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+  
+  
+    </div>
+  
+  
+  
+  
+    <!-- jobs -->
+    <div class = "col mx-auto col-lg-9 mt-4 " >
+      <div class = "container ">
+        <h1><b> Jobs List </b></h1>
+      </div>
+  
+      {% for joblist in joblists %}
+      <div class="card text-center col-lg-12 mt-2 mb-2" id = {{joblist.id}}>
+        <div class="card-header"> 
+  
+          <div>
+            <h3 class="card-title" style = "float : left;"><b> {{joblist.company_name}} </b></h3>
+  
+            {% if joblist|is_in_cart:request.session.cart %}
+            <input type="button" class="btn btn-outline-primary" style = "float : right; width: 140px;" value = "Applied"><br /><br />
+            {% else %}
+            <form action = "/#{{joblist.id}}" method = "POST">
+              {% csrf_token %}
+              <input hidden type="text" name = "joblist" value = "{{joblist.id}}">
+              <input type="submit" class="btn btn-outline-primary" style = "float : right; width: 140px;" value = "Apply"><br /><br />
+            </form>
+            {% endif %}
+  
+            <p class="card-text"  style = "float : left;"><b> {{joblist.location}} </b></p>
+          </div>  
+        </div>      
+        
+        
+        <div class="card-body mx-left">
+          <h5 class="card-title"> <u><b> Education</b></u> : {{joblist.education}} </h5>
+          <h5 class="card-title"> <u><b> Experience</b></u> : {{joblist.experience}} </h5>
+  
+          <p class="card-text"> {{joblist.description}} </p>
+          
+          <a href="#" class="btn btn-light">Skill : {{joblist.skills}}</a>
+        </div>
+        <div class="card-footer">
+          <h5 class = "card-footer-title" style = "float : left;"> <b><u>Posted on</u></b> : {{joblist.date}} </h5>
+          <h5 class = "card-footer-title" style = "float : right;"><b><u>Payrate</u>: </b> {{joblist.payrate}} </h5>
+        </div>
+        
+      </div>
+      {% endfor %}
+      
+  
+      <!-- Paginators 
+      <div class = "mx-auto mb-4" style = "text-align : center;">
+        {% if joblists.has_previous %}
+        <a href="{% url 'joblist' %}?page={{joblists.previous_page_number}}" style = "font-size: 20px;"> Prev </a> &ensp;&ensp;&ensp;&ensp;
+        {% endif %}
+      
+        {% if joblists.has_next %}
+        <a href="{% url 'joblist' %}?page={{joblists.next_page_number}}" style = "font-size: 20px;"> Next </a>
+        {% endif %}
+      </div>-->
+  
+    </div>
+  </div>
+  {% endblock %}

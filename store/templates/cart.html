@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+<div class="container mt-5">
+    <div class="border rounded">
+        <p class = "display-4 p-3"> Dashboard </p>
+    
+       <!-- jobs -->
+  <div class = "col mx-auto col-lg-9 mt-4 " >
+
+    {% for joblist in joblists %}
+    <div class="card text-center col-lg-12 mt-2 mb-2" id = {{joblist.id}}>
+      <div class="card-header"> 
+
+        <div>
+          <h3 class="card-title" style = "float : left;"><b> {{joblist.company_name}} </b></h3>
+          <p class="card-text"  style = "float : right;"><b> {{joblist.location}} </b></p>
+        </div>
+
+      </div>      
+      
+      <div class="card-body mx-left">
+        <h5 class="card-title"> <u><b> Education</b></u> : {{joblist.education}} </h5>
+        <h5 class="card-title"> <u><b> Experience</b></u> : {{joblist.experience}} </h5>
+
+        <p class="card-text"> {{joblist.description}} </p>
+        
+        <a class="btn btn-light">Skill : {{joblist.skills}}</a>
+      </div>
+      <div class="card-footer">
+        <h5 class = "card-footer-title" style = "float : left;"> <b><u>Posted on</u></b> : {{joblist.date}} </h5>
+        <h5 class = "card-footer-title" style = "float : right;"><b><u>Payrate</u>: </b> {{joblist.payrate}} </h5>
+      </div>
+      
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
